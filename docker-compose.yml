@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+    web:
+        container_name: go-cart-server
+        build:
+            context: ./
+            target: dev
+            dockerfile: ./docker/go/Dockerfile
+        ports:
+            - 8080:8080
+        volumes:
+            - .:/go/src/github.com/scastillop/redis_cart
+        links:
+            - redis
+        env_file:
+            - ./config/dev.env
+    redis:
+        image: redis:alpine
+        ports:
+         - "6379:6379"
